@@ -43,5 +43,11 @@ module.exports = {
     '@typescript-eslint/no-implied-eval': 'off',
     'import/no-cycle': 'off',
     'react/no-array-index-key': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 }

@@ -1,4 +1,6 @@
+import { DecoratorFn } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import {globalDecorators } from "./decorators";
 
 import { viewports as breakpoints } from '../src/styles/breakpoints'
 
@@ -31,3 +33,5 @@ export const parameters = {
     },
   },
 }
+
+export const decorators = globalDecorators; 
