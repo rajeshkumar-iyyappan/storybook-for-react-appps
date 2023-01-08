@@ -1,4 +1,8 @@
+import { rest } from 'msw'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
+
+import { restaurants } from '../../../../stub/restaurants'
+import { BASE_URL } from '../../../../api'
 
 import { RestaurantsSection } from './RestaurantsSection'
 
@@ -21,4 +25,15 @@ const Template: ComponentStory<typeof RestaurantsSection> = (args: any) => (
 )
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.parameters = {
+  msw: {
+    handlers: [rest.get(BASE_URL, (req, res, ctx) => res(ctx.json(restaurants)))],
+  },
+}
+
+export const Loading = Template.bind({})
+Loading.parameters = {
+  msw: {
+    handlers: [rest.get(BASE_URL, (req, res, ctx) => res(ctx.delay('infinite')))],
+  },
+}
