@@ -3,9 +3,27 @@ import { GlobalStyle } from '../src/styles/GlobalStyle'
 import { withDesign } from 'storybook-addon-designs'
 import { initialize, mswDecorator } from 'msw-storybook-addon'
 
+import { Provider as StoreProvider } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
+
+import { rootReducer } from '../src/app-state'
+
 import { BrowserRouter } from 'react-router-dom'
 
 initialize()
+
+const withStore = (StoryFn, { parameters }) => {
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState: parameters.store?.initialState,
+  })
+
+  return (
+    <StoreProvider store={store}>
+      <StoryFn />
+    </StoreProvider>
+  )
+}
 
 const withRouter: DecoratorFn = (StoryFn) => (
   <BrowserRouter>
@@ -30,4 +48,4 @@ const withTheme: DecoratorFn = (StoryFn, context) => {
   )
 }
 
-export const globalDecorators = [mswDecorator, withTheme, withDesign, withRouter]
+export const globalDecorators = [mswDecorator, withStore, withTheme, withDesign, withRouter]
