@@ -8,7 +8,7 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import { rootReducer } from '../src/app-state'
 
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom'
 
 initialize()
 
@@ -25,11 +25,24 @@ const withStore = (StoryFn, { parameters }) => {
   )
 }
 
-const withRouter: DecoratorFn = (StoryFn) => (
-  <BrowserRouter>
-    <StoryFn />
-  </BrowserRouter>
-)
+const withRouter: DecoratorFn = (StoryFn, { parameters: { deeplink } }) => {
+  if (!deeplink) {
+    return (
+      <BrowserRouter>
+        <StoryFn />
+      </BrowserRouter>
+    )
+  }
+
+  const { path, route } = deeplink
+  return (
+    <MemoryRouter initialEntries={[encodeURI(route)]}>
+      <Routes>
+        <Route path={path} element={<StoryFn />} />
+      </Routes>
+    </MemoryRouter>
+  )
+}
 
 import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from '../src/styles/theme'
