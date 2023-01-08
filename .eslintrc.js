@@ -7,7 +7,7 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb-typescript',
     'plugin:prettier/recommended',
-    'plugin:storybook/recommended ',
+    'plugin:storybook/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {

@@ -1,4 +1,6 @@
+import { expect } from '@storybook/jest'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import { rest } from 'msw'
 
 import { BASE_URL } from '../../api'
@@ -40,6 +42,18 @@ Success.parameters = {
   msw: {
     handlers: [rest.get(BASE_URL, (req, res, ctx) => res(ctx.json(restaurants[0])))],
   },
+}
+
+export const WithModalOpen = Template.bind({})
+WithModalOpen.args = {
+  ...Success.parameters,
+}
+
+WithModalOpen.play = async ({ canvasElement, args }) => {
+  const canvas = within(canvasElement)
+  const foodItem = await canvas.findByText(/Cheeseburger/i)
+  await userEvent.click(foodItem)
+  await expect(canvas.getByTestId('modal')).toBeInTheDocument()
 }
 
 export const Loading = Template.bind({})
