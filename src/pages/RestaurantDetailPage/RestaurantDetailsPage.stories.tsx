@@ -30,3 +30,47 @@ const Template: ComponentStory<typeof RestaurantDetailPage> = (args: any) => (
 )
 
 export const Default = Template.bind({})
+
+export const Success = Template.bind({})
+Success.parameters = {
+  design: {
+    title: 'figma',
+    url: 'https://www.figma.com/file/3Q1HTCalD0lJnNvcMoEw1x/Mealdrop?node-id=1126%3A3893&t=E6fUzobJdMiCA09Q-4',
+  },
+  msw: {
+    handlers: [rest.get(BASE_URL, (req, res, ctx) => res(ctx.json(restaurants[0])))],
+  },
+}
+
+export const Loading = Template.bind({})
+Loading.parameters = {
+  design: {
+    title: 'figma',
+    url: 'https://www.figma.com/file/3Q1HTCalD0lJnNvcMoEw1x/Mealdrop?node-id=1126%3A3893&t=E6fUzobJdMiCA09Q-4',
+  },
+  msw: {
+    handlers: [rest.get(BASE_URL, (req, res, ctx) => res(ctx.delay('infinite')))],
+  },
+}
+
+export const NotFound = Template.bind({})
+NotFound.parameters = {
+  design: {
+    title: 'figma',
+    url: 'https://www.figma.com/file/3Q1HTCalD0lJnNvcMoEw1x/Mealdrop?node-id=1126%3A3893&t=E6fUzobJdMiCA09Q-4',
+  },
+  msw: {
+    handlers: [rest.get(BASE_URL, (req, res, ctx) => res(ctx.status(404)))],
+  },
+}
+
+export const Error = Template.bind({})
+Error.parameters = {
+  design: {
+    title: 'figma',
+    url: 'https://www.figma.com/file/3Q1HTCalD0lJnNvcMoEw1x/Mealdrop?node-id=1126%3A3893&t=E6fUzobJdMiCA09Q-4',
+  },
+  msw: {
+    handlers: [rest.get(BASE_URL, (req, res, ctx) => res(ctx.status(500)))],
+  },
+}
